@@ -1,8 +1,6 @@
 import com.chobocho.tetris.*;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -20,6 +18,9 @@ public class TetrisBoardGui extends JPanel implements ActionListener, ITetrisObs
     JLabel statusbar;
     Timer tetrisTimer;
     int   gameSpeed = 0;
+
+    private Image screenBuffer = null;
+    private Graphics graphicsBuffer = null;
 
 
     public TetrisBoardGui(TetrisMain parent) {
@@ -64,23 +65,33 @@ public class TetrisBoardGui extends JPanel implements ActionListener, ITetrisObs
     public void paint(Graphics g)
     {
         super.paint(g);
-
         Dimension size = getSize();
-        int boardY = (int) size.getHeight() - BOARD_HEIGHT * blockHeight();
 
+        int width = (int)size.getWidth();
+        int height = (int)size.getHeight();
+
+        if (screenBuffer == null) {
+            screenBuffer = createImage(width, height);
+        }
+
+        graphicsBuffer = screenBuffer.getGraphics();
+        graphicsBuffer.setColor(Color.DARK_GRAY);
+        graphicsBuffer.fillRect(0, 0, width, height);
+
+
+        int boardY = (int) size.getHeight() - BOARD_HEIGHT * blockHeight();
+        int boardX = (int) (size.getWidth() - BOARD_WIDTH * blockHeight())/2;
 
         int i = 0;
         int j = 0;
 
-        int width = tetris.getWidth();
-        int height = tetris.getHeight();
 
         int[][] m_Board = tetris.getBoard();
 
         // Draw board
-        for (i = 0; i < width; i++) {
-            for (j = 0; j < height; j++) {
-                drawRectangle(g, 0 + i * blockWidth(),
+        for (i = 0; i < BOARD_WIDTH; i++) {
+            for (j = 0; j < BOARD_HEIGHT; j++) {
+                drawRectangle(graphicsBuffer, boardX + i * blockWidth(),
                         boardY + j * blockHeight(), m_Board[j][i]);
             }
         }
@@ -98,13 +109,13 @@ public class TetrisBoardGui extends JPanel implements ActionListener, ITetrisObs
             for (i = 0; i < w; i++) {
                 for (j = 0; j < h; j++) {
                     if (m_block[j][i] != Tetris.EMPTY) {
-                        drawRectangle(g, (x + i) * blockWidth(),
+                        drawRectangle(graphicsBuffer, boardX + (x + i) * blockWidth(),
                                 boardY + (y+j) * blockHeight(), type);
                     }
                 }
             }
-
         }
+        g.drawImage(screenBuffer, 0, 0, null);
     }
 
     private void drawRectangle(Graphics g, int x, int y, int type)
