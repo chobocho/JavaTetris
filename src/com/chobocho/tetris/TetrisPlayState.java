@@ -104,15 +104,20 @@ public class TetrisPlayState extends TetrisGameState {
             additionalPoint = 1;
             return 0;
         }
+
+        int lineScore = 22;
         if (removedLineCount >= 4) {
             removedLineCount = 4;
+            lineScore = 888;
+        } else {
+            lineScore *= removedLineCount;
         }
         if (additionalPoint > 10000) {
             additionalPoint = 10000;
         }
         additionalPoint <<= removedLineCount;
         TetrisLog.d("calculatorScore : " + additionalPoint + " : " + removedLineCount);
-        return  (removedLineCount * 10 * additionalPoint);
+        return  (removedLineCount * 10 * additionalPoint + lineScore);
     }
 
     public Tetrominos getCurrentTetrominos() {
