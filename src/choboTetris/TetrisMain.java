@@ -1,6 +1,7 @@
+package choboTetris;
+
 import javax.swing.*;
 import java.awt.*;
-
 
 public class TetrisMain extends JFrame {
     JLabel statusbar;
@@ -9,11 +10,12 @@ public class TetrisMain extends JFrame {
         statusbar = new JLabel("Press S to play game");
         statusbar.setFont(new Font(statusbar.getFont().getFontName(), Font.PLAIN, 18));
         add(statusbar, BorderLayout.SOUTH);
-        TetrisBoardGui tetrisBoardGui = new TetrisBoardGui(this);
+        TetrisBoardGui tetrisBoardGui  = new TetrisBoardGui(this);
         add(tetrisBoardGui);
+
         tetrisBoardGui.start();
 
-        setSize(300, 630);
+        setSize(390, 630);
         setTitle("ChoboTetris");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
