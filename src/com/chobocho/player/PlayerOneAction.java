@@ -54,6 +54,14 @@ public class PlayerOneAction implements IPlayerAction {
             case KeyEvent.VK_SPACE:
                 player.moveBottom();
                 break;
+            case 'H':
+            case 'h':
+                if (player.isEnableShadow()) {
+                    player.disableShadow();
+                } else {
+                    player.enableShadow();
+                }
+                break;
             case 'p':
             case'P':
                 player.pause();

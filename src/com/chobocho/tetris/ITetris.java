@@ -45,4 +45,7 @@ public interface ITetris {
     public boolean isPlayState();
     public boolean isPauseState();
 
+    public boolean isEnableShadow();
+    public void enableShadow();
+    public void disableShadow();
 }

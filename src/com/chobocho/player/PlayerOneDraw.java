@@ -28,62 +28,66 @@ public class PlayerOneDraw implements IPlayerDraw {
 
         if (tetris.isPlayState()) {
             System.out.println("Tetris (d) PlayerOne DrawBlock!");
-            Tetrominos shadowBlock = tetris.getShadowBlock();
-            int[][] sBlock = shadowBlock.getBlock();
-            int sw = shadowBlock.getWidth();
-            int sh = shadowBlock.getHeight();
-            int sx = shadowBlock.getX();
-            int sy = shadowBlock.getY();
-            int sType = shadowBlock.getType();
 
-            for (i = 0; i < sw; i++) {
-                for (j = 0; j < sh; j++) {
-                    if (sBlock[j][i] != Tetris.EMPTY) {
-                        drawShadowRectangle(g, startX + (sx + i) * blockWidth,
-                                startY + (sy+j) * blockHeight, sType, blockWidth, blockHeight);
-                    }
-                }
+            if (tetris.isEnableShadow()) {
+                Tetrominos shadowBlock = tetris.getShadowBlock();
+                drawShadowBlock(g, shadowBlock, startX, startY, blockWidth, blockHeight);
             }
 
             Tetrominos currentBlock = tetris.getCurrentBlock();
-            int[][] block = currentBlock.getBlock();
-            int w = currentBlock.getWidth();
-            int h = currentBlock.getHeight();
-            int x = currentBlock.getX();
-            int y = currentBlock.getY();
-            int type = currentBlock.getType();
+            drawBlock(g, currentBlock, startX, startY, blockWidth, blockHeight);
 
-            for (i = 0; i < w; i++) {
-                for (j = 0; j < h; j++) {
-                    if (block[j][i] != Tetris.EMPTY) {
-                        drawRectangle(g, startX + (x + i) * blockWidth,
-                                startY + (y+j) * blockHeight, type, blockWidth, blockHeight);
-                    }
-                }
-            }
-
-
-            Tetrominos aNextblock = tetris.getNextBlock();
-            int[][] nextBlock = aNextblock.getBlock();
-            int nw = aNextblock.getWidth();
-            int nh = aNextblock.getHeight();
-            int nx = aNextblock.getX();
-            int ny = aNextblock.getY();
-            int ntype = aNextblock.getType();
+            Tetrominos nextblock = tetris.getNextBlock();
             int nextBlockX = startX + blockWidth * (tetris.getWidth()-1);
             int nextBlockY = startY + blockHeight * 4;
 
-            for (i = 0; i < nw; i++) {
-                for (j = 0; j < nh; j++) {
-                    if (nextBlock[j][i] != Tetris.EMPTY) {
-                        drawRectangle(g, nextBlockX + (nx + i) * blockWidth/2,
-                                nextBlockY + (ny+j) * blockHeight/2, ntype, blockWidth/2, blockHeight/2);
-                    }
-                }
-            }
-
+            drawBlock(g, nextblock, nextBlockX, nextBlockY, blockWidth/2, blockHeight/2);
         }
 
+        int scorePointX =  startX + blockWidth * (tetris.getWidth()+1);
+        int scorePointY =  startY + blockHeight * 8;
+        g.setColor(Color.CYAN);
+        g.setFont(new Font("Purisa", Font.PLAIN, 14));
+        g.drawString(String.valueOf(tetris.getScore()), scorePointX, scorePointY);
+    }
+
+
+    private void drawBlock(Graphics g, Tetrominos block, int startX, int startY, int blockWidth, int blockHeight) {
+        int i = 0, j = 0;
+        int[][] ablock = block.getBlock();
+        int sw = block.getWidth();
+        int sh = block.getHeight();
+        int sx = block.getX();
+        int sy = block.getY();
+        int sType = block.getType();
+
+        for (i = 0; i < sw; i++) {
+            for (j = 0; j < sh; j++) {
+                if (ablock[j][i] != Tetris.EMPTY) {
+                    drawRectangle(g, startX + (sx + i) * blockWidth,
+                            startY + (sy + j) * blockHeight, sType, blockWidth, blockHeight);
+                }
+            }
+        }
+    }
+
+    private void drawShadowBlock(Graphics g, Tetrominos block, int startX, int startY, int blockWidth, int blockHeight) {
+        int i = 0, j = 0;
+        int[][] ablock = block.getBlock();
+        int sw = block.getWidth();
+        int sh = block.getHeight();
+        int sx = block.getX();
+        int sy = block.getY();
+        int sType = block.getType();
+
+        for (i = 0; i < sw; i++) {
+            for (j = 0; j < sh; j++) {
+                if (ablock[j][i] != Tetris.EMPTY) {
+                    drawShadowRectangle(g, startX + (sx + i) * blockWidth,
+                            startY + (sy + j) * blockHeight, sType, blockWidth, blockHeight);
+                }
+            }
+        }
     }
 
     private void drawRectangle(Graphics g, int x, int y, int type, int blockWidth, int blockHeight)

@@ -17,7 +17,7 @@ public class Player implements IPlayer, ActionListener {
     IPlayerAction playerAction;
     Timer tetrisTimer;
 
-    private int   gameSpeed = 0;
+    private int     gameSpeed = 0;
 
     public Player(TetrisBoardGui board, IPlayerDraw playerDraw, IPlayerAction playerAction) {
         this.board = board;
@@ -98,6 +98,10 @@ public class Player implements IPlayer, ActionListener {
     public boolean isPauseState() {
         return tetris.isPauseState();
     }
+
+    public boolean isEnableShadow() { return tetris.isEnableShadow(); }
+    public void enableShadow() { tetris.enableShadow(); }
+    public void disableShadow() { tetris.disableShadow(); }
 
     public void actionPerformed(ActionEvent e) {
         System.out.println("Tetris (d) There is event");

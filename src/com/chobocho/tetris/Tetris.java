@@ -7,6 +7,7 @@ public class Tetris implements ITetris {
     private int score;
     private int level;
     private int speed;
+    private boolean isEnableShadow = true;
 
     private TetrisIdleState idleState;
     private TetrisPlayState playState;
@@ -110,6 +111,17 @@ public class Tetris implements ITetris {
     public Tetrominos getCurrentBlock() { return gameState.getCurrentTetrominos(); }
     public Tetrominos getNextBlock() { return gameState.getNextTetrominos(); }
     public Tetrominos getShadowBlock() { return gameState.getShodowTetrominos(); }
+
+    public boolean isEnableShadow(){ return this.isEnableShadow; }
+    public void enableShadow() {
+        this.isEnableShadow = true;
+        gameState.update();
+    }
+    public void disableShadow() {
+        this.isEnableShadow = false;
+        gameState.update();
+    }
+
     public void register(ITetrisObserver observer) {
         TetrisLog.d("Registered view!");
         this.observer = observer;
