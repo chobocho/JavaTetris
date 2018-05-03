@@ -35,8 +35,8 @@ public interface ITetris {
     public ITetrisObserver getObserver();
 
     public Tetrominos getCurrentBlock();
-
     public Tetrominos getNextBlock();
+    public Tetrominos getShadowBlock();
 
     public int addSore(int score);
 

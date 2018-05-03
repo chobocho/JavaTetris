@@ -109,6 +109,7 @@ public class Tetris implements ITetris {
     }
     public Tetrominos getCurrentBlock() { return gameState.getCurrentTetrominos(); }
     public Tetrominos getNextBlock() { return gameState.getNextTetrominos(); }
+    public Tetrominos getShadowBlock() { return gameState.getShodowTetrominos(); }
     public void register(ITetrisObserver observer) {
         TetrisLog.d("Registered view!");
         this.observer = observer;

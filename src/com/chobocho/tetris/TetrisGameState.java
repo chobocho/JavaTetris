@@ -57,6 +57,10 @@ public abstract class TetrisGameState {
         return null;
     }
 
+    public Tetrominos getShodowTetrominos() {
+        return null;
+    }
+
     public void update() {
         TetrisLog.d("TetrisGameState.update()");
         if (tetris != null) {

@@ -3,6 +3,7 @@ package com.chobocho.tetris;
 public class TetrisPlayState extends TetrisGameState {
     private Tetrominos currentTetrominos;
     private Tetrominos nextTetrominos;
+    private Tetrominos shadowTetrominos;
     private TetrisBoard tetrisBoard;
     private int additionalPoint = 1;
 
@@ -11,11 +12,13 @@ public class TetrisPlayState extends TetrisGameState {
         this.tetrisBoard = board;
         currentTetrominos = TetrominosFactory.create();
         nextTetrominos = TetrominosFactory.create();
+        shadowTetrominos = TetrominosFactory.clone(currentTetrominos);
     }
 
     public void init() {
         this.tetrisBoard.init();
         currentTetrominos = TetrominosFactory.create();
+        shadowTetrominos = TetrominosFactory.clone(currentTetrominos);
         nextTetrominos = TetrominosFactory.create();
         additionalPoint = 1;
     }
@@ -79,12 +82,14 @@ public class TetrisPlayState extends TetrisGameState {
         }
     }
 
+
     public void fixCurrentBlock() {
         tetrisBoard.addTetrominos(currentTetrominos);
     }
 
     public void updateBlock() {
         currentTetrominos = nextTetrominos;
+        shadowTetrominos = TetrominosFactory.clone(currentTetrominos);
         nextTetrominos = TetrominosFactory.create();
     }
 
@@ -126,6 +131,24 @@ public class TetrisPlayState extends TetrisGameState {
 
     public Tetrominos getNextTetrominos() {
         return nextTetrominos;
+    }
+
+    public Tetrominos getShodowTetrominos() {
+        moveShadowBottom();
+        return shadowTetrominos;
+    }
+
+    public void moveShadowBottom() {
+        TetrisLog.d("TetrisPlayState.moveShadowBottom()");
+
+        shadowTetrominos.clone(currentTetrominos);
+
+        while(tetrisBoard.isAcceptable(shadowTetrominos)) {
+            shadowTetrominos.moveDown();
+        }
+        if (tetrisBoard.isAcceptable(shadowTetrominos) == false) {
+            shadowTetrominos.moveUp();
+        }
     }
 
     public boolean isPlayState() {

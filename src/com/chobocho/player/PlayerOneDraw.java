@@ -28,6 +28,23 @@ public class PlayerOneDraw implements IPlayerDraw {
 
         if (tetris.isPlayState()) {
             System.out.println("Tetris (d) PlayerOne DrawBlock!");
+            Tetrominos shadowBlock = tetris.getShadowBlock();
+            int[][] sBlock = shadowBlock.getBlock();
+            int sw = shadowBlock.getWidth();
+            int sh = shadowBlock.getHeight();
+            int sx = shadowBlock.getX();
+            int sy = shadowBlock.getY();
+            int sType = shadowBlock.getType();
+
+            for (i = 0; i < sw; i++) {
+                for (j = 0; j < sh; j++) {
+                    if (sBlock[j][i] != Tetris.EMPTY) {
+                        drawShadowRectangle(g, startX + (sx + i) * blockWidth,
+                                startY + (sy+j) * blockHeight, sType, blockWidth, blockHeight);
+                    }
+                }
+            }
+
             Tetrominos currentBlock = tetris.getCurrentBlock();
             int[][] block = currentBlock.getBlock();
             int w = currentBlock.getWidth();
@@ -44,6 +61,7 @@ public class PlayerOneDraw implements IPlayerDraw {
                     }
                 }
             }
+
 
             Tetrominos aNextblock = tetris.getNextBlock();
             int[][] nextBlock = aNextblock.getBlock();
@@ -63,7 +81,7 @@ public class PlayerOneDraw implements IPlayerDraw {
                     }
                 }
             }
-            
+
         }
 
     }
@@ -86,6 +104,30 @@ public class PlayerOneDraw implements IPlayerDraw {
         g.drawLine(x, y, x + blockWidth - 1, y);
 
         g.setColor(color.darker());
+        g.drawLine(x + 1, y + blockHeight - 1,
+                x + blockWidth - 1, y + blockHeight - 1);
+        g.drawLine(x + blockWidth - 1, y + blockHeight - 1,
+                x + blockWidth - 1, y + 1);
+    }
+
+    private void drawShadowRectangle(Graphics g, int x, int y, int type, int blockWidth, int blockHeight)
+    {
+        Color colors[] = { new Color(90, 90, 90), new Color(204, 102, 102),
+                new Color(102, 204, 102), new Color(102, 102, 204),
+                new Color(204, 204, 102), new Color(204, 102, 204),
+                new Color(102, 204, 204), new Color(218, 170, 0)
+        };
+
+        Color color = colors[type];
+
+        g.setColor(color);
+        //g.fillRect(x + 1, y + 1, blockWidth - 2, blockHeight - 2);
+
+        g.setColor(color.brighter());
+        g.drawLine(x, y + blockHeight - 1, x, y);
+        g.drawLine(x, y, x + blockWidth - 1, y);
+
+        //g.setColor(color.darker());
         g.drawLine(x + 1, y + blockHeight - 1,
                 x + blockWidth - 1, y + blockHeight - 1);
         g.drawLine(x + blockWidth - 1, y + blockHeight - 1,

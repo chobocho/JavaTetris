@@ -64,4 +64,10 @@ public abstract class Tetrominos {
     }
 
     public int getType() { return type; }
+
+    public void clone(Tetrominos t) {
+        this.x = t.x;
+        this.y = t.y;
+        this.r = t.r;
+    }
 }

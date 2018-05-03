@@ -7,24 +7,35 @@ import java.util.*;
 public class TetrominosFactory {
 
     public static Tetrominos create() {
-        switch( (int) (Math.random() * 7)) {
-            case 0:
-                return new OTetrominos();
-            case 1:
-                return new ITetrominos();
-            case 2:
-                return new LTetrominos();
-            case 3:
-                return new JTetrominos();
-            case 4:
-                return new TTetrominos();
-            case 5:
-                return new STetrominos();
-            case 6:
-                return new ZTetrominos();
-            default:
-                return new ITetrominos();
+       return create ((int) (Math.random() * 7)+1);
+    }
+
+    public static Tetrominos create(int type) {
+        switch(type) {
+                case 1:
+                    return new OTetrominos();
+                case 2:
+                    return new ITetrominos();
+                case 3:
+                    return new LTetrominos();
+                case 4:
+                    return new JTetrominos();
+                case 5:
+                    return new TTetrominos();
+                case 6:
+                    return new STetrominos();
+                case 7:
+                    return new ZTetrominos();
+                default:
+                    TetrisLog.e("Tetrominos Create Error! Never come to here!");
+                    return new ITetrominos();
         }
+    }
+
+    public static Tetrominos clone(Tetrominos t) {
+        Tetrominos block = create(t.getType());
+        block.clone(t);
+        return block;
     }
 
     private TetrominosFactory() {}
