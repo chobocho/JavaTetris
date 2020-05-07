@@ -1,5 +1,4 @@
 package com.chobocho.tetris;
-import java.util.*;
 
 /**
  * 

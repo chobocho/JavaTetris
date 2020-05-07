@@ -1,9 +1,5 @@
 package com.chobocho.tetris;
-import java.util.*;
 
-/**
- * 
- */
 public class JTetrominos extends Tetrominos {
 
     public JTetrominos() {

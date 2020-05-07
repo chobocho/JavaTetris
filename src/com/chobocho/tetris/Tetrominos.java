@@ -1,9 +1,5 @@
 package com.chobocho.tetris;
-import java.util.*;
 
-/**
- * 
- */
 public abstract class Tetrominos {
     protected int x;
     protected int y;

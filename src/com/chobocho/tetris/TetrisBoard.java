@@ -1,5 +1,5 @@
 package com.chobocho.tetris;
-import java.util.*;
+
 
 /**
  * 
@@ -86,7 +86,7 @@ public class TetrisBoard {
     }
 
     public int arrange() {
-        int x = 0, y = 0, m = 0, n = 0;
+        int x = 0, y = 0, m = 0;
         int count = 0;
         int removedLIne = 0;
 

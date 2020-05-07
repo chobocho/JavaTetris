@@ -1,9 +1,5 @@
 package com.chobocho.tetris;
-import java.util.*;
 
-/**
- * 
- */
 public class TetrominosFactory {
 
     public static Tetrominos create() {

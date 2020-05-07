@@ -60,14 +60,14 @@ public class TetrisPlayState extends TetrisGameState {
     public void moveDown() {
         TetrisLog.d("TetrisPlayState.moveDown()");
         currentTetrominos.moveDown();
-        if (tetrisBoard.isAcceptable(currentTetrominos) == false) {
+        if (tetrisBoard.isAcceptable(currentTetrominos)) {
+            TetrisLog.d("Accept");
+        } else {
             currentTetrominos.moveUp();
             TetrisLog.d("Can not move down");
             fixCurrentBlock();
             updateBoard();
             updateBlock() ;
-        } else {
-            TetrisLog.d("Accept");
         }
     }
 
@@ -77,9 +77,10 @@ public class TetrisPlayState extends TetrisGameState {
         while(tetrisBoard.isAcceptable(currentTetrominos)) {
             currentTetrominos.moveDown();
         }
-        if (tetrisBoard.isAcceptable(currentTetrominos) == false) {
-            currentTetrominos.moveUp();
+        if (tetrisBoard.isAcceptable(currentTetrominos)) {
+            return;
         }
+        currentTetrominos.moveUp();
     }
 
 
@@ -95,7 +96,7 @@ public class TetrisPlayState extends TetrisGameState {
 
     public boolean gameOver() {
         TetrisLog.d("Check Game over!");
-        return (tetrisBoard.isAcceptable(currentTetrominos) == false);
+        return !tetrisBoard.isAcceptable(currentTetrominos);
     }
 
     public void updateBoard() {
@@ -146,9 +147,10 @@ public class TetrisPlayState extends TetrisGameState {
         while(tetrisBoard.isAcceptable(shadowTetrominos)) {
             shadowTetrominos.moveDown();
         }
-        if (tetrisBoard.isAcceptable(shadowTetrominos) == false) {
-            shadowTetrominos.moveUp();
+        if (tetrisBoard.isAcceptable(shadowTetrominos)) {
+            return;
         }
+        shadowTetrominos.moveUp();
     }
 
     public boolean isPlayState() {
